@@ -16,5 +16,7 @@ namespace Totem_Smash
         {
             InitializeComponent();
         }
+
+        //TODO load MenuScreen
     }
 }

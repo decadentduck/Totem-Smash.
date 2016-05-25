@@ -16,5 +16,9 @@ namespace Totem_Smash
         {
             InitializeComponent();
         }
+        //TODO Display instructions
+        //TODO Display Description
+        //TODO Prompt players to hit key to start game
+        //TODO If all player hit key load up GameScreen
     }
 }
