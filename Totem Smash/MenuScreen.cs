@@ -12,19 +12,51 @@ namespace Totem_Smash
 {
     public partial class MenuScreen : UserControl
     {
+        bool p1Ready, p2Ready;
         public MenuScreen()
         {
             InitializeComponent();
         }
 
+
         private void MenuScreen_Load(object sender, EventArgs e)
         {
-            instructionLabel.Text = "Press yellow button to jump /nPress green button to Smash";
-            DescriptionLabel.Text = "Description: Pound the totem into the ground before your opponent does./nhe higher you jump the more effective your smash."
+            instructionLabel.Text = "Controls:\nPress yellow button to jump \nPress green button to Smash";
+            DescriptionLabel.Text = "Description:\nPound the totem into the ground before your opponent does.\nThe higher you jump the more effective your smash.";
+            
+
         }
-        //TODO Display instructions
-        //TODO Display Description
-        //TODO Prompt players to hit key to start game
-        //TODO If all player hit key load up GameScreen
+
+        private void MenuScreen_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.N:
+                    p1Ready = true;
+                    break;
+                case Keys.V:
+                    p2Ready = true;
+                    break;
+            }
+
+            //TODO If all player hit key load up GameScreen
+            if (p1Ready)
+            {
+                //TODO make p1Ready Label
+            }
+            if (p2Ready)
+            {
+                //TODO make p2Ready label
+            }
+            if (p1Ready && p2Ready)
+            {
+                //Start GameScreen
+                Form f = this.FindForm();
+                f.Controls.Remove(this);
+                GameScreen gs = new GameScreen();
+                f.Controls.Add(gs);
+            }
+        }
+        
     }
 }
