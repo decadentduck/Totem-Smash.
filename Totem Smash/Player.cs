@@ -23,10 +23,32 @@ namespace Totem_Smash
         }
 
         //TODO Jump method
+        public void Jump (Player P)
+        {
+
+        }
 
         //TODO smash method
+        public void Smash (Player P)
+        {
+
+        }
 
         //TODO collision method
+        public bool Collision(Player p, Totem t)
+        {
+            Rectangle pRec = new Rectangle(p.x, p.y, p.size, p.size);
+            Rectangle tRec=new Rectangle(t.x, t.y, t.size, t.size);
+
+            if (pRec.IntersectsWith(tRec))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
     }
 }

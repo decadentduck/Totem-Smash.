@@ -59,6 +59,7 @@
             this.Controls.Add(this.DescriptionLabel);
             this.Name = "MenuScreen";
             this.Size = new System.Drawing.Size(800, 750);
+            this.Load += new System.EventHandler(this.MenuScreen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

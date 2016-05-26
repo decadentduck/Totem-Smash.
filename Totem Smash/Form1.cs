@@ -16,7 +16,12 @@ namespace Totem_Smash
         {
             InitializeComponent();
         }
-
-        //TODO load MenuScreen
+        
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            MenuScreen ms = new MenuScreen();
+            this.Controls.Add(ms);
+        }
+        
     }
 }
