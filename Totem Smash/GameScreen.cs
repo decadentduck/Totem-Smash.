@@ -16,15 +16,15 @@ namespace Totem_Smash
         public GameScreen()
         {
             InitializeComponent();
-            CountDown();
+
         }
 
         Player P1, P2;
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
 
-        //TODO Image array for each Player
-        Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up , Properties.Resources.p1Fallingl };
+        //Image array for each Player
+        Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
         bool p1Up, p2Up, p1Down, p2Down;
@@ -46,8 +46,12 @@ namespace Totem_Smash
 
         private void CountDown()
         {
-            //TODO Totem damages set to zero
-            //TODO Game countdown timer
+            //Totem damages set to zero
+            foreach(Totem t in totems)
+            {
+                t.damage = 0;
+            }
+            //Game countdown timer
             Graphics formGraphics = this.CreateGraphics();            SolidBrush theBrush = new SolidBrush(Color.Black);            Font drawfont = new Font("Courier New", 35);            
             Refresh();
 
@@ -61,11 +65,16 @@ namespace Totem_Smash
 
             gameTimer.Start();
         }
-    
+
+        private void GameScreen_Load(object sender, EventArgs e)
+        {
+            SetUp();
+            CountDown();
+        }
 
         private void GameScreen_KeyDown(object sender, KeyEventArgs e)
         {
-            //TODO Set booleans for keydown to true for keys that are down
+            //Set booleans for keydown to true for keys that are down
             switch (e.KeyCode)
             {
                 case Keys.N:
@@ -88,7 +97,7 @@ namespace Totem_Smash
 
         private void GameScreen_KeyUp(object sender, KeyEventArgs e)
         {
-            //TODO Set booleans for keysdown to be false for keys that are up
+            //Set booleans for keysdown to be false for keys that are up
             switch (e.KeyCode)
             {
                 case Keys.N:
@@ -146,7 +155,7 @@ namespace Totem_Smash
             Brush drawBrush = new SolidBrush(Color.Black);
             foreach(Player p in players)
             {
-                e.Graphics.DrawImage(player1[1], P1.x, P1.y);
+                e.Graphics.DrawImage(player1[0], P1.x, P1.y); 
             }
 
             foreach(Totem t in totems)
