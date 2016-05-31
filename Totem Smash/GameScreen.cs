@@ -16,6 +16,7 @@ namespace Totem_Smash
         public GameScreen()
         {
             InitializeComponent();
+            CountDown();
         }
 
         Player P1, P2;
@@ -23,8 +24,8 @@ namespace Totem_Smash
         List<Totem> totems = new List<Totem>();
 
         //TODO Image array for each Player
-        Image[] player1 = { };
-        Image[] player2 = { };
+        Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up , Properties.Resources.p1Fallingl };
+        Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
         bool p1Up, p2Up, p1Down, p2Down;
         int p1Points, p2Points;
@@ -38,6 +39,9 @@ namespace Totem_Smash
             //Add totems to a list
             totems.Add(t);
             totems.Add(tt);
+
+            P1 = new Player(100, 500, 50, 3, player1);
+            P2 = new Player(500, 500, 50, 3, player2);
         }
 
         private void CountDown()
@@ -132,6 +136,7 @@ namespace Totem_Smash
             }
 
             #endregion
+            Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
@@ -139,7 +144,11 @@ namespace Totem_Smash
             //TODO Draw players from player list
             //TODO Draw totems from totem list
             Brush drawBrush = new SolidBrush(Color.Black);
-            
+            foreach(Player p in players)
+            {
+                e.Graphics.DrawImage(player1[1], P1.x, P1.y);
+            }
+
             foreach(Totem t in totems)
             {
                 e.Graphics.FillRectangle(drawBrush, t.x, t.y, 80, t.size - t.damage);
