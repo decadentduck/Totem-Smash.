@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace Totem_Smash
 {
@@ -27,19 +28,36 @@ namespace Totem_Smash
 
         bool p1Up, p2Up, p1Down, p2Down;
         int p1Points, p2Points;
-
+        int numOfPlayers = 2;
 
         private void SetUp()
         {
-            //TODO Create a totem for each player
-            //TODO Add totems to a list
+            //Create a totem for each player
+            Totem t = new Totem(100, 500, 0, 600);
+            Totem tt = new Totem(500, 500, 0, 600);
+            //Add totems to a list
+            totems.Add(t);
+            totems.Add(tt);
         }
 
         private void CountDown()
         {
             //TODO Totem damages set to zero
             //TODO Game countdown timer
+            Graphics formGraphics = this.CreateGraphics();            SolidBrush theBrush = new SolidBrush(Color.Black);            Font drawfont = new Font("Courier New", 35);            
+            Refresh();
+
+            //countdown to start of game
+            for (int i = 3; i > 0; i--)
+            {
+                formGraphics.DrawString(Convert.ToString(i), drawfont, theBrush, (this.Width / 2) - 16, (this.Height / 2) - 63);
+                Thread.Sleep(1000);
+                this.Refresh();
+            }
+
+            gameTimer.Start();
         }
+    
 
         private void GameScreen_KeyDown(object sender, KeyEventArgs e)
         {
@@ -120,6 +138,12 @@ namespace Totem_Smash
         {
             //TODO Draw players from player list
             //TODO Draw totems from totem list
+            Brush drawBrush = new SolidBrush(Color.Black);
+            
+            foreach(Totem t in totems)
+            {
+                e.Graphics.FillRectangle(drawBrush, t.x, t.y, 80, t.size - t.damage);
+            }
         }
 
         private void EndGame()

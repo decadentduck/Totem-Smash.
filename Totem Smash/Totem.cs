@@ -18,9 +18,10 @@ namespace Totem_Smash
             damage = _damage;
         }
 
-        public void DamageDone(int damage)
+        public void DamageDone(int _damage)
         {
             //TODO make totem size change dependant on damage
+            //damage = 
         }
     }
 }
