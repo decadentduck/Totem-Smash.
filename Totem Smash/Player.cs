@@ -11,7 +11,7 @@ namespace Totem_Smash
     class Player
     {
         public int x, y, size, speed;
-        Image[] player = new Image[4];
+        public Image[] playerImage = new Image[4];
 
         public Player(int _x, int _y, int _size, int _speed, Image[] _player)
         {
@@ -19,19 +19,22 @@ namespace Totem_Smash
             y = _y;
             size = _size;
             speed = _speed;
-            player = _player;
+            playerImage = _player;
         }
 
         //TODO Jump method
-        public void Jump (Player P)
+        public void Jump ()
         {
-
+            if (y < 0)
+            {
+                y = y - speed;
+            }
         }
 
         //TODO smash method
-        public void Smash (Player P)
+        public void Smash ()
         {
-
+            y = y - speed;
         }
 
         //TODO collision method

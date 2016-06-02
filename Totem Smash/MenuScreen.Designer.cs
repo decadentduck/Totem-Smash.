@@ -31,6 +31,10 @@
             this.DescriptionLabel = new System.Windows.Forms.Label();
             this.instructionLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.ready2 = new System.Windows.Forms.PictureBox();
+            this.ready1 = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.ready2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ready1)).BeginInit();
             this.SuspendLayout();
             // 
             // DescriptionLabel
@@ -63,11 +67,33 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Press yellow button to start";
             // 
+            // ready2
+            // 
+            this.ready2.Image = global::Totem_Smash.Properties.Resources.p2Falling;
+            this.ready2.Location = new System.Drawing.Point(615, 136);
+            this.ready2.Name = "ready2";
+            this.ready2.Size = new System.Drawing.Size(100, 116);
+            this.ready2.TabIndex = 3;
+            this.ready2.TabStop = false;
+            this.ready2.Visible = false;
+            // 
+            // ready1
+            // 
+            this.ready1.Image = global::Totem_Smash.Properties.Resources.p1up;
+            this.ready1.Location = new System.Drawing.Point(401, 136);
+            this.ready1.Name = "ready1";
+            this.ready1.Size = new System.Drawing.Size(100, 116);
+            this.ready1.TabIndex = 4;
+            this.ready1.TabStop = false;
+            this.ready1.Visible = false;
+            // 
             // MenuScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
+            this.Controls.Add(this.ready1);
+            this.Controls.Add(this.ready2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.instructionLabel);
             this.Controls.Add(this.DescriptionLabel);
@@ -75,6 +101,8 @@
             this.Size = new System.Drawing.Size(800, 750);
             this.Load += new System.EventHandler(this.MenuScreen_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.MenuScreen_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.ready2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ready1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -85,5 +113,7 @@
         private System.Windows.Forms.Label DescriptionLabel;
         private System.Windows.Forms.Label instructionLabel;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox ready2;
+        private System.Windows.Forms.PictureBox ready1;
     }
 }

@@ -27,21 +27,26 @@ namespace Totem_Smash
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
-        bool p1Up, p2Up, p1Down, p2Down;
+        bool p1Up, p2Up, p1Down, p2Down, escape;
         int p1Points, p2Points;
         int numOfPlayers = 2;
 
         private void SetUp()
         {
+            totems.Clear();
+            players.Clear();
+
             //Create a totem for each player
-            Totem t = new Totem(100, 500, 0, 600);
-            Totem tt = new Totem(500, 500, 0, 600);
+            Totem t = new Totem(100, 200, 0, 500);
+            Totem tt = new Totem(500, 200, 0, 500);
             //Add totems to a list
             totems.Add(t);
             totems.Add(tt);
 
-            P1 = new Player(100, 500, 50, 3, player1);
-            P2 = new Player(500, 500, 50, 3, player2);
+            P1 = new Player(t.x, t.y - 70, 80, 3, player1);
+            P2 = new Player(tt.x, tt.y - 78, 80, 3, player2);
+            players.Add(P1);
+            players.Add(P2);
         }
 
         private void CountDown()
@@ -89,7 +94,9 @@ namespace Totem_Smash
                 case Keys.Z:
                     p2Down = true;
                     break;
-                    //TODO escape key to exit game
+                case Keys.Escape:
+                    escape = true;
+                    break;
                 default:
                     break;
             }
@@ -112,7 +119,6 @@ namespace Totem_Smash
                 case Keys.Z:
                     p2Down = false;
                     break;
-                //TODO escape key to exit game
                 default:
                     break;
             }
@@ -120,9 +126,21 @@ namespace Totem_Smash
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            if (escape == true)
+            {
+                //call up mainscreen
+                Form f = this.FindForm();
+                MenuScreen ms = new MenuScreen();
+                this.Controls.Add(ms);
+                //TODO problems?
+            }
+            
+
             #region Player Movement
             //TODO Check for player movement
             //TODO If smashing already continue smashing
+            if (p1Down == true) { players[0].Smash(); }
+            if (p2Down == true) { players[1].Smash(); }
             //TODO Else check if smash = true then call player.smash method
             //TODO Else If already jumping continue jumping
             //TODO Else If jump = true then call player.Jump method
@@ -151,16 +169,16 @@ namespace Totem_Smash
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             //TODO Draw players from player list
-            //TODO Draw totems from totem list
+            // Draw totems from totem list
             Brush drawBrush = new SolidBrush(Color.Black);
             foreach(Player p in players)
             {
-                e.Graphics.DrawImage(player1[0], P1.x, P1.y); 
+                e.Graphics.DrawImage(p.playerImage[0], p.x, p.y); 
             }
 
             foreach(Totem t in totems)
             {
-                e.Graphics.FillRectangle(drawBrush, t.x, t.y, 80, t.size - t.damage);
+                e.Graphics.FillRectangle(drawBrush, t.x, t.y + t.damage, 120, t.size - t.damage);
             }
         }
 

@@ -16,7 +16,7 @@ namespace Totem_Smash
         public MenuScreen()
         {
             InitializeComponent();
-            //TODO set screen location to the top left corner
+            
         }
 
 
@@ -27,6 +27,7 @@ namespace Totem_Smash
             
 
         }
+        
 
         private void MenuScreen_KeyDown(object sender, KeyEventArgs e)
         {
@@ -44,11 +45,17 @@ namespace Totem_Smash
             if (p1Ready)
             {
                 //TODO make p1Ready Label
+                ready1.Visible = true;
             }
+            else { ready1.Visible = false; }
+
             if (p2Ready)
             {
                 //TODO make p2Ready label
+                ready2.Visible = true;
             }
+            else { ready2.Visible = false; }
+
             if (p1Ready && p2Ready)
             {
                 //Start GameScreen

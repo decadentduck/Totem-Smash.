@@ -37,8 +37,9 @@
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(800, 750);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Location = new System.Drawing.Point(-20, -20);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Totem Smash";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 
