@@ -13,22 +13,20 @@ namespace Totem_Smash
     public partial class MenuScreen : UserControl
     {
         bool p1Ready, p2Ready;
+
         public MenuScreen()
         {
             InitializeComponent();
             
         }
-
-
+        
         private void MenuScreen_Load(object sender, EventArgs e)
         {
             instructionLabel.Text = "Controls:\nPress yellow button to jump \nPress green button to smash";
             DescriptionLabel.Text = "Description:\nPound the totem into the ground before your opponent does.\nThe higher you jump the more effective your smash.";
-            
-
+           
         }
         
-
         private void MenuScreen_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)

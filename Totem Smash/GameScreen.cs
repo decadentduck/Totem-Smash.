@@ -57,7 +57,10 @@ namespace Totem_Smash
                 t.damage = 0;
             }
             //Game countdown timer
-            Graphics formGraphics = this.CreateGraphics();            SolidBrush theBrush = new SolidBrush(Color.Black);            Font drawfont = new Font("Courier New", 35);            
+            Graphics formGraphics = this.CreateGraphics();
+            SolidBrush theBrush = new SolidBrush(Color.Black);
+            Font drawfont = new Font("Courier New", 35);
+            
             Refresh();
 
             //countdown to start of game
@@ -130,6 +133,7 @@ namespace Totem_Smash
             {
                 //call up mainscreen
                 Form f = this.FindForm();
+                f.Controls.Remove(this);
                 MenuScreen ms = new MenuScreen();
                 this.Controls.Add(ms);
                 //TODO problems?
@@ -140,10 +144,13 @@ namespace Totem_Smash
             //TODO Check for player movement
             //TODO If smashing already continue smashing
             if (p1Down == true) { players[0].Smash(); }
+            if (p1Up == true) { players[0].Jump(); }
             if (p2Down == true) { players[1].Smash(); }
+            if (p2Up == true) { players[1].Jump(); }
             //TODO Else check if smash = true then call player.smash method
             //TODO Else If already jumping continue jumping
             //TODO Else If jump = true then call player.Jump method
+            Refresh();
             #endregion
 
             #region Collision Check
