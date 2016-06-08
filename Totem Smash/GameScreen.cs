@@ -129,6 +129,7 @@ namespace Totem_Smash
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+
             if (escape == true)
             {
                 //call up mainscreen
@@ -141,15 +142,19 @@ namespace Totem_Smash
             
 
             #region Player Movement
-            //TODO Check for player movement
-            //TODO If smashing already continue smashing
             if (p1Down == true) { players[0].Smash(); }
-            if (p1Up == true) { players[0].Jump(); }
+            if (p1Up == true || players[0].jump == true)
+            {
+                players[0].jump = true;
+                players[0].Jump(totems[0].y, 70);
+            }
+
             if (p2Down == true) { players[1].Smash(); }
-            if (p2Up == true) { players[1].Jump(); }
-            //TODO Else check if smash = true then call player.smash method
-            //TODO Else If already jumping continue jumping
-            //TODO Else If jump = true then call player.Jump method
+            if (p2Up == true || players[1].jump == true)
+            {
+                players[1].jump = true;
+                players[1].Jump(totems[1].y, 78);
+            }
             Refresh();
             #endregion
 

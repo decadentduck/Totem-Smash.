@@ -24,9 +24,17 @@ namespace Totem_Smash
         }
 
         //TODO Jump method
-        public void Jump ()
+        public void Jump (int totemY, int playerSize)
         {
-            y = y - speed;
+            if (fall == true)
+            {
+                y = y + speed;
+
+                if (y - playerSize > totemY) { jump = false;  fall = false; }
+            }
+            else { y = y - speed; }
+            
+            if (y < 0) { fall = true; }
             
         }
 
