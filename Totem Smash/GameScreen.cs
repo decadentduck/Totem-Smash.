@@ -16,9 +16,10 @@ namespace Totem_Smash
         public GameScreen()
         {
             InitializeComponent();
-
+            this.Focus();
         }
 
+        #region bools ints lists arrays
         Player P1, P2;
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
@@ -27,9 +28,10 @@ namespace Totem_Smash
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
-        bool p1Up, p2Up, p1Down, p2Down, escape;
+        bool p1Up, p2Up, p1Down, p2Down, escape, canJump1, canJump2;
         int p1Points, p2Points;
         int numOfPlayers = 2;
+        #endregion
 
         private void SetUp()
         {
@@ -43,8 +45,8 @@ namespace Totem_Smash
             totems.Add(t);
             totems.Add(tt);
 
-            P1 = new Player(t.x, t.y - 70, 80, 3, player1);
-            P2 = new Player(tt.x, tt.y - 78, 80, 3, player2);
+            P1 = new Player(t.x, t.y - 70, 80, 8, player1);
+            P2 = new Player(tt.x, tt.y - 78, 80, 8, player2);
             players.Add(P1);
             players.Add(P2);
         }
@@ -112,12 +114,14 @@ namespace Totem_Smash
             {
                 case Keys.N:
                     p1Up = false;
+                    canJump1 = true;
                     break;
                 case Keys.Space:
                     p1Down = false;
                     break;
                 case Keys.V:
                     p2Up = false;
+                    canJump2 = true;
                     break;
                 case Keys.Z:
                     p2Down = false;
@@ -140,19 +144,48 @@ namespace Totem_Smash
                 //TODO problems?
             }
             
-
             #region Player Movement
-            if (p1Down == true) { players[0].Smash(); }
-            if (p1Up == true || players[0].jump == true)
+            //smash PLAYER 1
+            if (p1Down == true && players[0].fall == false)
+            {
+                players[0].smash = true;
+                players[0].jump = false;
+                //totems[0].damage = totems[0].damage + (100 - players[0].y);
+            }
+            if (players[0].smash == true)
+            {
+                players[0].Smash(totems[0].y, 70);
+            }
+
+            //Jump PLAYER 1
+            if (p1Up == true && canJump1 == true)
             {
                 players[0].jump = true;
+            }
+                if (players[0].jump == true)
+            {
                 players[0].Jump(totems[0].y, 70);
             }
 
-            if (p2Down == true) { players[1].Smash(); }
-            if (p2Up == true || players[1].jump == true)
+            //smash PLAYER 2
+            if(p2Down == true && players[1].fall == false)
+            {
+                players[1].smash = true;
+                players[1].jump = false;
+               //totems[1].damage = totems[1].damage + (100 - players[1].y);
+            }
+            if (players[1].smash == true)
+            {
+                players[1].Smash(totems[1].y, 78);
+            }
+
+            //jump PLAYER 2
+            if (p2Up == true && canJump2 == true)
             {
                 players[1].jump = true;
+            }
+            if (players[1].jump == true)
+            {
                 players[1].Jump(totems[1].y, 78);
             }
             Refresh();
@@ -175,6 +208,7 @@ namespace Totem_Smash
             }
 
             #endregion
+
             Refresh();
         }
 
