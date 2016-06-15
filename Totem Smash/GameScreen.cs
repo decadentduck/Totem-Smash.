@@ -16,7 +16,6 @@ namespace Totem_Smash
         public GameScreen()
         {
             InitializeComponent();
-            this.Focus();
         }
 
         #region bools ints lists arrays
@@ -30,7 +29,6 @@ namespace Totem_Smash
 
         bool p1Up, p2Up, p1Down, p2Down, escape, canJump1, canJump2;
         int p1Points, p2Points;
-        int numOfPlayers = 2;
         #endregion
 
         private void SetUp()
@@ -39,14 +37,14 @@ namespace Totem_Smash
             players.Clear();
 
             //Create a totem for each player
-            Totem t = new Totem(100, 200, 0, 500);
-            Totem tt = new Totem(500, 200, 0, 500);
+            Totem t = new Totem(100, 150, 500, 0);
+            Totem tt = new Totem(500, 150, 500, 0);
             //Add totems to a list
             totems.Add(t);
             totems.Add(tt);
 
-            P1 = new Player(t.x, t.y - 70, 80, 8, player1);
-            P2 = new Player(tt.x, tt.y - 78, 80, 8, player2);
+            P1 = new Player(t.x, t.y - 80, 80, 8, player1);
+            P2 = new Player(tt.x, tt.y - 82, 80, 8, player2);
             players.Add(P1);
             players.Add(P2);
         }
@@ -80,6 +78,7 @@ namespace Totem_Smash
         {
             SetUp();
             CountDown();
+            this.Focus();
         }
 
         private void GameScreen_KeyDown(object sender, KeyEventArgs e)
@@ -138,7 +137,6 @@ namespace Totem_Smash
             {
                 //call up mainscreen
                 Form f = this.FindForm();
-                f.Controls.Remove(this);
                 MenuScreen ms = new MenuScreen();
                 this.Controls.Add(ms);
                 //TODO problems?
@@ -172,11 +170,34 @@ namespace Totem_Smash
             {
                 players[1].smash = true;
                 players[1].jump = false;
-               //totems[1].damage = totems[1].damage + (100 - players[1].y);
             }
             if (players[1].smash == true)
             {
-                players[1].Smash(totems[1].y, 78);
+                players[1].Smash(totems[1].y, 82);
+
+                #region Collision Check
+                //Check for collision between player and totem(call Player.collision method)
+                foreach (Totem T in totems)
+                {
+                    if (P2.Collision(P1, T) == true)
+                    {
+                        //Determine damage done to totem and send it to totem.damageDone Method
+                        totems[1].DamageDone(totems[1].y - players[1].highest);
+                        //Check if there’s totem left
+                        if (totems[1].size - totems[1].damage < 1)
+                        {
+                            //If a totem is at the ground that player gets a point
+                            p2Points++;
+                            //Check if that player has three points, If yes EndGame
+                            if (p2Points == 3) { EndGame(); }
+                            //Else call up CountDown method to restart
+                            else { CountDown(); }
+                        }
+                    }
+                }
+
+                #endregion
+
             }
 
             //jump PLAYER 2
@@ -186,35 +207,15 @@ namespace Totem_Smash
             }
             if (players[1].jump == true)
             {
-                players[1].Jump(totems[1].y, 78);
+                players[1].Jump(totems[1].y, 82);
             }
-            Refresh();
             #endregion
-
-            #region Collision Check
-            //TODO Check for collision between player and totem(call Player.collision method)
-            foreach (Totem T in totems)
-            {   
-                if (P1.Collision(P1, T) == true)
-                {       
-                    //TODO Determine damage done to totem and send it to totem.damageDone Method
-                    //TODO Damage will be done to totem dependant on how high the characters were when they chose to smash
-                    //TODO Check if there’s totem left
-                    //TODO If a totem is at the ground that player gets a point
-                    //TODO Check if that player has three points
-                    //TODO If yes then call EndGame method
-                    //TODO Else call up CountDown method to restart
-                }
-            }
-
-            #endregion
-
             Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
-            //TODO Draw players from player list
+            //Draw players from player list
             // Draw totems from totem list
             Brush drawBrush = new SolidBrush(Color.Black);
             foreach(Player p in players)
@@ -222,7 +223,7 @@ namespace Totem_Smash
                 e.Graphics.DrawImage(p.playerImage[0], p.x, p.y); 
             }
 
-            foreach(Totem t in totems)
+            foreach(Totem t in totems) // x, y, height, width  //xy is bottom left corner
             {
                 e.Graphics.FillRectangle(drawBrush, t.x, t.y + t.damage, 120, t.size - t.damage);
             }

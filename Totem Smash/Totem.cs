@@ -8,9 +8,9 @@ namespace Totem_Smash
 {
     class Totem
     {
-        public int x, y, damage, size;
+        public int x, y, size, damage;
 
-        public Totem(int _x, int _y, int _damage, int _size) 
+        public Totem(int _x, int _y, int _size, int _damage) 
         {
             x = _x;
             y = _y;
@@ -21,7 +21,8 @@ namespace Totem_Smash
         public void DamageDone(int _damage)
         {
             //make totem size change dependant on damage
-            damage = damage + _damage;
+            damage += _damage;
+            y += damage;
         }
     }
 }

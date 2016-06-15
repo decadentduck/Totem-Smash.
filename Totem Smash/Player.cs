@@ -10,7 +10,7 @@ namespace Totem_Smash
     
     class Player
     {
-        public int x, y, size, speed, damageDone;
+        public int x, y, size, speed, highest;
         public bool jump, fall, smash;
         public Image[] playerImage = new Image[4];
 
@@ -34,15 +34,22 @@ namespace Totem_Smash
             {
                 y = y + speed;
 
-                if (y + playerSize > totemY) { jump = false;  fall = false; }
+                if (y + playerSize > totemY)
+                {
+                    jump = false;
+                    fall = false;
+                }
             }
             else { y = y - speed; }
             
-            if (y < 0) { fall = true; }
+            if (y < 0)
+            {
+                fall = true;
+                highest = y;
+            }
             
         }
-
-        //TODO smash method
+        
         public void Smash (int totemY, int playerSize)
         {
             if (y + playerSize > totemY)
@@ -51,8 +58,7 @@ namespace Totem_Smash
             }
             else { y = y + speed; }
         }
-
-        //TODO collision method maybe not needed
+        
         public bool Collision(Player p, Totem t)
         {
             Rectangle pRec = new Rectangle(p.x, p.y, p.size, p.size);

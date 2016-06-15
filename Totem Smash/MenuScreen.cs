@@ -39,7 +39,7 @@ namespace Totem_Smash
                     break;
             }
 
-            //TODO If all player hit key load up GameScreen
+            //If all player hit key load up GameScreen
             if (p1Ready)
             {
                 //TODO make p1Ready Label
