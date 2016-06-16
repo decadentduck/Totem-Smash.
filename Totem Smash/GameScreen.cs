@@ -27,7 +27,7 @@ namespace Totem_Smash
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
-        bool p1Up, p2Up, p1Down, p2Down, escape, canJump1, canJump2;
+        bool p1Up, p2Up, p1Down, p2Down, escape;
         int p1Points, p2Points;
         #endregion
 
@@ -51,12 +51,16 @@ namespace Totem_Smash
 
         private void CountDown()
         {
+            players[0].canJump = true;
+            players[1].canJump = true;
+
             //Totem damages set to zero
-            foreach(Totem t in totems)
+            foreach (Totem t in totems)
             {
                 t.damage = 0;
             }
-            //Game countdown timer
+
+            #region Game countdown timer
             Graphics formGraphics = this.CreateGraphics();
             SolidBrush theBrush = new SolidBrush(Color.Black);
             Font drawfont = new Font("Courier New", 35);
@@ -70,6 +74,7 @@ namespace Totem_Smash
                 Thread.Sleep(1000);
                 this.Refresh();
             }
+            #endregion
 
             gameTimer.Start();
         }
@@ -113,14 +118,12 @@ namespace Totem_Smash
             {
                 case Keys.N:
                     p1Up = false;
-                    canJump1 = true;
                     break;
                 case Keys.Space:
                     p1Down = false;
                     break;
                 case Keys.V:
                     p2Up = false;
-                    canJump2 = true;
                     break;
                 case Keys.Z:
                     p2Down = false;
@@ -156,9 +159,10 @@ namespace Totem_Smash
             }
 
             //Jump PLAYER 1
-            if (p1Up == true && canJump1 == true)
+            if (p1Up == true && players[0].canJump == true)
             {
                 players[0].jump = true;
+                players[0].canJump = false;
             }
                 if (players[0].jump == true)
             {
@@ -174,58 +178,82 @@ namespace Totem_Smash
             if (players[1].smash == true)
             {
                 players[1].Smash(totems[1].y, 82);
-
-                #region Collision Check
-                //Check for collision between player and totem(call Player.collision method)
-                foreach (Totem T in totems)
-                {
-                    if (P2.Collision(P1, T) == true)
-                    {
-                        //Determine damage done to totem and send it to totem.damageDone Method
-                        totems[1].DamageDone(totems[1].y - players[1].highest);
-                        //Check if there’s totem left
-                        if (totems[1].size - totems[1].damage < 1)
-                        {
-                            //If a totem is at the ground that player gets a point
-                            p2Points++;
-                            //Check if that player has three points, If yes EndGame
-                            if (p2Points == 3) { EndGame(); }
-                            //Else call up CountDown method to restart
-                            else { CountDown(); }
-                        }
-                    }
-                }
-
-                #endregion
-
             }
-
+            
             //jump PLAYER 2
-            if (p2Up == true && canJump2 == true)
+            if (p2Up == true && players[1].canJump == true)
             {
                 players[1].jump = true;
+                players[1].canJump = false;
             }
             if (players[1].jump == true)
             {
                 players[1].Jump(totems[1].y, 82);
+
             }
             #endregion
+
             Refresh();
+            for (int i = 0; i < 2; i++)
+            {
+                if (players[i].checkCol)
+                {
+                    #region Collision Check
+
+                    //Check for collision between player and totem(call Player.collision method)
+                    foreach (Player P in players)
+                    {
+                        if (P.Collision(P, totems[i]) == true)
+                        {
+                            P.smash = false;
+                            P.canJump = true;
+
+                            //Determine damage done to totem and send it to totem.damageDone Method
+                            int damage = Convert.ToInt16((totems[i].y - P.highest) / 100);
+                            totems[i].DamageDone(damage);
+
+                            P.y = totems[i].y - 82;
+
+                            //Check if there’s totem left
+                            if (totems[i].size - totems[i].damage < 1)
+                            {
+                                if (i == 0)
+                                {
+                                    p1Points++;
+                                    if (p1Points == 3) { EndGame(); }
+                                    else { SetUp(); CountDown(); }
+                                }
+                                if (i == 1)
+                                {
+                                    p2Points++;
+                                    if (p2Points == 3) { EndGame(); }
+                                    else { SetUp(); CountDown(); }
+                                }
+                            }
+                        }
+                    }
+                    #endregion
+
+                    players[i].checkCol = false;
+                }
+            }
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             //Draw players from player list
-            // Draw totems from totem list
+            //Draw totems from totem list
             Brush drawBrush = new SolidBrush(Color.Black);
             foreach(Player p in players)
             {
                 e.Graphics.DrawImage(p.playerImage[0], p.x, p.y); 
             }
 
-            foreach(Totem t in totems) // x, y, height, width  //xy is bottom left corner
+            foreach(Totem t in totems) 
             {
-                e.Graphics.FillRectangle(drawBrush, t.x, t.y + t.damage, 120, t.size - t.damage);
+                t.size = t.size - t.damage;
+                t.damage = 0;
+                e.Graphics.FillRectangle(drawBrush, t.x, t.y, 120, t.size);
             }
         }
 

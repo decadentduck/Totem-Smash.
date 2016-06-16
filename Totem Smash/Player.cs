@@ -11,7 +11,7 @@ namespace Totem_Smash
     class Player
     {
         public int x, y, size, speed, highest;
-        public bool jump, fall, smash;
+        public bool jump, fall, smash, canJump, checkCol;
         public Image[] playerImage = new Image[4];
 
         public Player(int _x, int _y, int _size, int _speed, Image[] _player)
@@ -52,11 +52,8 @@ namespace Totem_Smash
         
         public void Smash (int totemY, int playerSize)
         {
-            if (y + playerSize > totemY)
-            {
-                smash = false;
-            }
-            else { y = y + speed; }
+            y = y + speed;
+            checkCol = true;
         }
         
         public bool Collision(Player p, Totem t)
