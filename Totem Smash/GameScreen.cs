@@ -18,7 +18,8 @@ namespace Totem_Smash
             InitializeComponent();
         }
 
-        #region bools ints lists arrays
+        #region ints lists arrays
+
         Player P1, P2;
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
@@ -26,11 +27,12 @@ namespace Totem_Smash
         //Image array for each Player
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
-
-        bool p1Up, p2Up, p1Down, p2Down, escape;
-        int p1Points, p2Points;
+        
         #endregion
 
+        /// <summary>
+        /// Sets up everything for the new game
+        /// </summary>
         private void SetUp()
         {
             totems.Clear();
@@ -43,21 +45,32 @@ namespace Totem_Smash
             totems.Add(t);
             totems.Add(tt);
 
-            P1 = new Player(t.x, t.y - 80, 80, 8, player1);
-            P2 = new Player(tt.x, tt.y - 82, 80, 8, player2);
+            P1 = new Player(t.x + 10, t.y - 82, 82, 8, player1);
+            P2 = new Player(tt.x + 10, tt.y - 82, 82, 8, player2);
             players.Add(P1);
             players.Add(P2);
         }
 
+        /// <summary>
+        /// Resets all values for the next round
+        /// </summary>
         private void CountDown()
         {
-            players[0].canJump = true;
-            players[1].canJump = true;
+            //reset player values and positions
+            foreach(Player p in players)
+            {
+                p.canJump = true;
+                p.canSmash = false;
+                p.y = 68;
+                p.lowest = 150;
+            }
 
-            //Totem damages set to zero
+            //Reset Totem damages set to zero
             foreach (Totem t in totems)
             {
+                t.y = 150;
                 t.damage = 0;
+                t.size = 500;
             }
 
             #region Game countdown timer
@@ -92,19 +105,19 @@ namespace Totem_Smash
             switch (e.KeyCode)
             {
                 case Keys.N:
-                    p1Up = true;
+                    players[0].keysUp = true;
                     break;
                 case Keys.Space:
-                    p1Down = true;
+                    players[0].keysDown = true;
                     break;
                 case Keys.V:
-                    p2Up = true;
+                    players[1].keysUp = true;
                     break;
                 case Keys.Z:
-                    p2Down = true;
+                    players[1].keysDown = true;
                     break;
                 case Keys.Escape:
-                    escape = true;
+                    Escape();
                     break;
                 default:
                     break;
@@ -117,16 +130,16 @@ namespace Totem_Smash
             switch (e.KeyCode)
             {
                 case Keys.N:
-                    p1Up = false;
+                    players[0].keysUp = false;
                     break;
                 case Keys.Space:
-                    p1Down = false;
+                    players[0].keysDown = false;
                     break;
                 case Keys.V:
-                    p2Up = false;
+                    players[1].keysUp = false;
                     break;
                 case Keys.Z:
-                    p2Down = false;
+                    players[1].keysDown = false;
                     break;
                 default:
                     break;
@@ -136,70 +149,45 @@ namespace Totem_Smash
         private void gameTimer_Tick(object sender, EventArgs e)
         {
 
-            if (escape == true)
+            for( int i = 0; i < 2; i++ )
             {
-                //call up mainscreen
-                Form f = this.FindForm();
-                MenuScreen ms = new MenuScreen();
-                this.Controls.Add(ms);
-                //TODO problems?
-            }
-            
-            #region Player Movement
-            //smash PLAYER 1
-            if (p1Down == true && players[0].fall == false)
-            {
-                players[0].smash = true;
-                players[0].jump = false;
-                //totems[0].damage = totems[0].damage + (100 - players[0].y);
-            }
-            if (players[0].smash == true)
-            {
-                players[0].Smash(totems[0].y, 70);
             }
 
-            //Jump PLAYER 1
-            if (p1Up == true && players[0].canJump == true)
-            {
-                players[0].jump = true;
-                players[0].canJump = false;
-            }
-                if (players[0].jump == true)
-            {
-                players[0].Jump(totems[0].y, 70);
-            }
-
-            //smash PLAYER 2
-            if(p2Down == true && players[1].fall == false)
-            {
-                players[1].smash = true;
-                players[1].jump = false;
-            }
-            if (players[1].smash == true)
-            {
-                players[1].Smash(totems[1].y, 82);
-            }
-            
-            //jump PLAYER 2
-            if (p2Up == true && players[1].canJump == true)
-            {
-                players[1].jump = true;
-                players[1].canJump = false;
-            }
-            if (players[1].jump == true)
-            {
-                players[1].Jump(totems[1].y, 82);
-
-            }
-            #endregion
-
-            Refresh();
             for (int i = 0; i < 2; i++)
             {
+
+                #region Player Movement
+                //smash
+                if (players[i].keysDown == true && players[i].canSmash == true)
+                {
+                    players[i].smash = true;
+                    players[i].jump = false;
+                }
+                if (players[i].smash == true)
+                {
+                    players[i].Smash(totems[0].y);
+                }
+
+                //Jump 
+                if (players[i].keysUp == true && players[0].canJump == true)
+                {
+                    players[i].jump = true;
+                    players[i].canJump = false;
+                }
+                if (players[i].jump == true)
+                {
+                    players[i].Jump(totems[0].y);
+                }
+
+                if (players[i].y > players[i].lowest)
+                {
+                    players[i].lowest = players[0].y;
+                }
+                #endregion
+
+                #region Collision Check
                 if (players[i].checkCol)
                 {
-                    #region Collision Check
-
                     //Check for collision between player and totem(call Player.collision method)
                     foreach (Player P in players)
                     {
@@ -209,58 +197,89 @@ namespace Totem_Smash
                             P.canJump = true;
 
                             //Determine damage done to totem and send it to totem.damageDone Method
-                            int damage = Convert.ToInt16((totems[i].y - P.highest) / 100);
+                            int damage = Convert.ToInt16((P.lowest - P.highest) /10);
                             totems[i].DamageDone(damage);
 
-                            P.y = totems[i].y - 82;
+                            P.y = totems[i].y - P.size;
+                            P.highest = 0;
 
                             //Check if there’s totem left
                             if (totems[i].size - totems[i].damage < 1)
                             {
                                 if (i == 0)
                                 {
-                                    p1Points++;
-                                    if (p1Points == 3) { EndGame(); }
-                                    else { SetUp(); CountDown(); }
+                                    players[0].points++;
+                                    if (players[0].points == 3) { EndGame(); }
+                                    else { CountDown(); }
                                 }
                                 if (i == 1)
                                 {
-                                    p2Points++;
-                                    if (p2Points == 3) { EndGame(); }
-                                    else { SetUp(); CountDown(); }
+                                    players[1].points++;
+                                    if (players[1].points == 3) { EndGame(); }
+                                    else { CountDown(); }
                                 }
                             }
                         }
                     }
-                    #endregion
-
                     players[i].checkCol = false;
                 }
+                #endregion
             }
+
+            Refresh();
         }
 
         private void GameScreen_Paint(object sender, PaintEventArgs e)
         {
             //Draw players from player list
-            //Draw totems from totem list
             Brush drawBrush = new SolidBrush(Color.Black);
             foreach(Player p in players)
             {
-                e.Graphics.DrawImage(p.playerImage[0], p.x, p.y); 
+                if (p.jump == true)
+                {
+                    if (p.fall == true) { e.Graphics.DrawImage(p.playerImage[1], p.x, p.y); }
+                    else { e.Graphics.DrawImage(p.playerImage[2], p.x, p.y); }
+                }
+                else if (p.smash == true) { e.Graphics.DrawImage(p.playerImage[1], p.x, p.y); }
+                else { e.Graphics.DrawImage(p.playerImage[0], p.x, p.y); }
+                
             }
 
-            foreach(Totem t in totems) 
+            //Draw totems from totem list
+            foreach (Totem t in totems) 
             {
-                t.size = t.size - t.damage;
-                t.damage = 0;
                 e.Graphics.FillRectangle(drawBrush, t.x, t.y, 120, t.size);
             }
+
+            //update point labels
+            point1Label.Text = "Player 1 points: " + players[0].points;
+            point2Label.Text = "Player 2 points: " + players[1].points;
         }
 
+        /// <summary>
+        /// call up Main Screen
+        /// </summary>
+        private void Escape()
+        {
+            //call up mainscreen
+            Form f = this.FindForm();
+            f.Controls.Remove(f);
+            MenuScreen ms = new MenuScreen();
+            f.Controls.Add(ms);
+            //TODO problems?
+        }
+
+        /// <summary>
+        /// call up highscore screen
+        /// </summary>
         private void EndGame()
         {
             //TODO the winner will be saved to an xml file
             //TODO the program will close and go back to the main Program
+            Form f = this.FindForm();
+            f.Controls.Remove(this);
+            EndScreen es = new EndScreen();
+            f.Controls.Add(es);
         }
         
     }

@@ -23,6 +23,8 @@ namespace Totem_Smash
             //make totem size change dependant on damage
             damage += _damage;
             y += damage;
+            size -= damage;
+            damage = 0;
         }
     }
 }

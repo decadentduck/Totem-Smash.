@@ -10,9 +10,11 @@ namespace Totem_Smash
     
     class Player
     {
-        public int x, y, size, speed, highest;
-        public bool jump, fall, smash, canJump, checkCol;
-        public Image[] playerImage = new Image[4];
+        public int x, y, size, speed, highest,  points;
+        public int lowest = 150;
+        public bool jump, fall, smash, canJump, checkCol, keysUp, keysDown;
+        public bool canSmash = false;
+        public Image[] playerImage = new Image[3];
 
         public Player(int _x, int _y, int _size, int _speed, Image[] _player)
         {
@@ -28,31 +30,38 @@ namespace Totem_Smash
         /// </summary>
         /// <param name="totemY"></param>
         /// <param name="playerSize"></param>
-        public void Jump (int totemY, int playerSize)
+        public void Jump (int totemY)
         {
             if (fall == true)
             {
+                canSmash = false;
                 y = y + speed;
 
-                if (y + playerSize > totemY)
+                if (y + size > totemY)
                 {
                     jump = false;
                     fall = false;
+                    canJump = true;
                 }
+
             }
-            else { y = y - speed; }
+            else
+            {
+                canSmash = true;
+                y = y - speed;
+            }
             
             if (y < 0)
             {
                 fall = true;
                 highest = y;
             }
-            
         }
         
-        public void Smash (int totemY, int playerSize)
+        public void Smash (int totemY)
         {
-            y = y + speed;
+            canSmash = false;
+            y = y + speed * 2;
             checkCol = true;
         }
         

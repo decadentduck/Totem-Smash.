@@ -24,7 +24,6 @@ namespace Totem_Smash
         {
             instructionLabel.Text = "Controls:\nPress yellow button to jump \nPress green button to smash";
             DescriptionLabel.Text = "Description:\nPound the totem into the ground before your opponent does.\nThe higher you jump the more effective your smash.";
-           
         }
         
         private void MenuScreen_KeyDown(object sender, KeyEventArgs e)
