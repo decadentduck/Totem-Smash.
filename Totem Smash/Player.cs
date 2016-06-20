@@ -10,7 +10,8 @@ namespace Totem_Smash
     
     class Player
     {
-        public int x, y, size, speed, highest, time, points;
+        public int x, y, size, speed, time, points;
+        public int highest = 150;
         public int lowest = 150;
         public bool jump, fall, smash, canJump, checkCol, keysUp, keysDown;
         public bool canSmash = false;
@@ -31,8 +32,6 @@ namespace Totem_Smash
         /// <param name="totemY"></param>totems Y value for this player
         public void Jump (int totemY)
         {
-            //find highest point player jumped to determine damage later
-            if (y < highest) { highest = y; }
 
             //falling
             if (fall == true)
@@ -59,7 +58,6 @@ namespace Totem_Smash
                 if (y < 0)
                 {
                     fall = true;
-                    highest = y;
                 }
             }
         }

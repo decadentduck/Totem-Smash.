@@ -67,6 +67,7 @@ namespace Totem_Smash
                 p.canSmash = false;
                 p.y = 68;
                 p.lowest = 150;
+                p.highest = 150;
             }
 
             //Reset Totem damages set to zero
@@ -191,14 +192,14 @@ namespace Totem_Smash
                     p.Jump(totems[i].y);
                 }
 
-                if (p.y > p.lowest)
-                {
-                    p.lowest = p.y;
-                }
+                //find highest point player jumped to determine damage later
+                if (p.y < p.highest) { p.highest = p.y; }
+                if (p.y > p.lowest) { p.lowest = p.y; }
+
                 #endregion
 
                 #region Collision Check
-                if (players[i].checkCol)
+                if (p.checkCol)
                 {
                     //Check for collision between player and totem(call Player.collision method)
                     foreach (Player P in players)
@@ -209,8 +210,10 @@ namespace Totem_Smash
                             P.canJump = true;
 
                             //Determine damage done to totem and send it to totem.damageDone Method
-                            int damage = Convert.ToInt16((P.lowest - P.highest) /10);
+                            int damage = Convert.ToInt16((P.lowest - P.highest - p.size) /2);
                             totems[i].DamageDone(damage);
+                            p.highest = 800;
+                            p.lowest = 0;
 
                             P.y = totems[i].y - P.size;
                             P.highest = 0;
@@ -218,14 +221,15 @@ namespace Totem_Smash
                             //Check if there’s totem left
                             if (totems[i].size - totems[i].damage < 1)
                             {
-                                players[i].points++;
-                                if (players[i].points == 3) { EndGame(); }
+                                p.points++;
+                                if (p.points == 3) { EndGame(); }
                                 else { CountDown(); }
                             }
                         }
                     }
-                    players[i].checkCol = false;
+                    p.checkCol = false;
                 }
+
                 #endregion
             }
 
