@@ -10,7 +10,7 @@ namespace Totem_Smash
     
     class Player
     {
-        public int x, y, size, speed, highest,  points;
+        public int x, y, size, speed, highest, time, points;
         public int lowest = 150;
         public bool jump, fall, smash, canJump, checkCol, keysUp, keysDown;
         public bool canSmash = false;

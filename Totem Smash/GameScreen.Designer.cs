@@ -36,6 +36,7 @@
             // 
             // gameTimer
             // 
+            this.gameTimer.Interval = 60;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // point1Label

@@ -70,7 +70,7 @@
             // ready2
             // 
             this.ready2.Image = global::Totem_Smash.Properties.Resources.p2Falling;
-            this.ready2.Location = new System.Drawing.Point(615, 136);
+            this.ready2.Location = new System.Drawing.Point(600, 74);
             this.ready2.Name = "ready2";
             this.ready2.Size = new System.Drawing.Size(100, 116);
             this.ready2.TabIndex = 3;
@@ -80,7 +80,7 @@
             // ready1
             // 
             this.ready1.Image = global::Totem_Smash.Properties.Resources.p1up;
-            this.ready1.Location = new System.Drawing.Point(401, 136);
+            this.ready1.Location = new System.Drawing.Point(433, 74);
             this.ready1.Name = "ready1";
             this.ready1.Size = new System.Drawing.Size(100, 116);
             this.ready1.TabIndex = 4;

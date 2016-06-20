@@ -27,7 +27,10 @@ namespace Totem_Smash
         //Image array for each Player
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
-        
+
+        //counter
+        int c;
+
         #endregion
 
         /// <summary>
@@ -148,10 +151,14 @@ namespace Totem_Smash
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
-            for( int i = 0; i < 2; i++ )
+            #region timer
+            c++;
+            if (c == 60)
             {
+                c = 0;
+                foreach (Player p in players) { p.time++}
             }
+            #endregion
 
             for (int i = 0; i < 2; i++)
             {
