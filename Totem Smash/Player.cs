@@ -28,10 +28,13 @@ namespace Totem_Smash
         /// <summary>
         /// Jump Method
         /// </summary>
-        /// <param name="totemY"></param>
-        /// <param name="playerSize"></param>
+        /// <param name="totemY"></param>totems Y value for this player
         public void Jump (int totemY)
         {
+            //find highest point player jumped to determine damage later
+            if (y < highest) { highest = y; }
+
+            //falling
             if (fall == true)
             {
                 canSmash = false;
@@ -45,20 +48,26 @@ namespace Totem_Smash
                 }
 
             }
+
+            //jumping
             else
             {
                 canSmash = true;
                 y = y - speed;
-            }
-            
-            if (y < 0)
-            {
-                fall = true;
-                highest = y;
+
+                //if at top of screen then fall
+                if (y < 0)
+                {
+                    fall = true;
+                    highest = y;
+                }
             }
         }
-        
-        public void Smash (int totemY)
+
+        /// <summary>
+        /// Smash method
+        /// </summary>
+        public void Smash ()
         {
             canSmash = false;
             y = y + speed * 2;

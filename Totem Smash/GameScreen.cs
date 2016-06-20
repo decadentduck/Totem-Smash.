@@ -23,6 +23,7 @@ namespace Totem_Smash
         Player P1, P2;
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
+        public static List<int> scores = new List<int>();
 
         //Image array for each Player
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
@@ -156,39 +157,43 @@ namespace Totem_Smash
             if (c == 60)
             {
                 c = 0;
-                foreach (Player p in players) { p.time++}
+                foreach (Player p in players) { p.time++; }
             }
             #endregion
 
-            for (int i = 0; i < 2; i++)
+            //counter for totems
+            int i = -1;
+            foreach (Player p in players)
             {
+                i++;
 
                 #region Player Movement
+
                 //smash
-                if (players[i].keysDown == true && players[i].canSmash == true)
+                if (p.keysDown == true && p.canSmash == true)
                 {
-                    players[i].smash = true;
-                    players[i].jump = false;
+                    p.smash = true;
+                    p.jump = false;
                 }
-                if (players[i].smash == true)
+                if (p.smash == true)
                 {
-                    players[i].Smash(totems[0].y);
+                    p.Smash();
                 }
 
                 //Jump 
-                if (players[i].keysUp == true && players[0].canJump == true)
+                if (p.keysUp == true && p.canJump == true)
                 {
-                    players[i].jump = true;
-                    players[i].canJump = false;
+                    p.jump = true;
+                    p.canJump = false;
                 }
-                if (players[i].jump == true)
+                if (p.jump == true)
                 {
-                    players[i].Jump(totems[0].y);
+                    p.Jump(totems[i].y);
                 }
 
-                if (players[i].y > players[i].lowest)
+                if (p.y > p.lowest)
                 {
-                    players[i].lowest = players[0].y;
+                    p.lowest = p.y;
                 }
                 #endregion
 
@@ -213,18 +218,9 @@ namespace Totem_Smash
                             //Check if there’s totem left
                             if (totems[i].size - totems[i].damage < 1)
                             {
-                                if (i == 0)
-                                {
-                                    players[0].points++;
-                                    if (players[0].points == 3) { EndGame(); }
-                                    else { CountDown(); }
-                                }
-                                if (i == 1)
-                                {
-                                    players[1].points++;
-                                    if (players[1].points == 3) { EndGame(); }
-                                    else { CountDown(); }
-                                }
+                                players[i].points++;
+                                if (players[i].points == 3) { EndGame(); }
+                                else { CountDown(); }
                             }
                         }
                     }

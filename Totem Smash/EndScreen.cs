@@ -13,7 +13,6 @@ namespace Totem_Smash
 {
     public partial class EndScreen : UserControl
     {
-        list<Score>
 
         public EndScreen()
         {
@@ -38,5 +37,6 @@ namespace Totem_Smash
                 // When done reading the file close it
                 reader.Close();
             }
+        }
     }
 }
