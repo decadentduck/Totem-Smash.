@@ -222,7 +222,11 @@ namespace Totem_Smash
                             if (totems[i].size - totems[i].damage < 1)
                             {
                                 p.points++;
-                                if (p.points == 3) { EndGame(); }
+                                if (p.points == 3)
+                                {
+                                    //TODO add label to determine winner
+                                    EndGame();
+                                }
                                 else { CountDown(); }
                             }
                         }
