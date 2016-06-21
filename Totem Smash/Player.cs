@@ -27,7 +27,7 @@ namespace Totem_Smash
         }
 
         /// <summary>
-        /// Jump Method
+        /// Jump Method to make character jump
         /// </summary>
         /// <param name="totemY"></param>totems Y value for this player
         public void Jump (int totemY)
@@ -63,7 +63,7 @@ namespace Totem_Smash
         }
 
         /// <summary>
-        /// Smash method
+        /// Smash method to make player smash
         /// </summary>
         public void Smash ()
         {

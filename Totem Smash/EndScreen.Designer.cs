@@ -61,6 +61,7 @@
             this.Name = "EndScreen";
             this.Size = new System.Drawing.Size(800, 750);
             this.Load += new System.EventHandler(this.EndScreen_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.EndScreen_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

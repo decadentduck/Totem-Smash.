@@ -13,6 +13,7 @@ namespace Totem_Smash
     public partial class MenuScreen : UserControl
     {
         bool p1Ready, p2Ready;
+        //TODO add high scores option label
 
         public MenuScreen()
         {
@@ -28,6 +29,7 @@ namespace Totem_Smash
         
         private void MenuScreen_KeyDown(object sender, KeyEventArgs e)
         {
+
             switch (e.KeyCode)
             {
                 case Keys.N:
@@ -36,6 +38,10 @@ namespace Totem_Smash
                 case Keys.V:
                     p2Ready = true;
                     break;
+                case Keys.Escape:
+                    //TODO add option to close application
+                    break;
+                    //TODO add option to go to highscores
             }
 
             //If all player hit key load up GameScreen

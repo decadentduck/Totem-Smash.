@@ -23,7 +23,8 @@ namespace Totem_Smash
         Player P1, P2;
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
-        public static List<int> scores = new List<int>();
+
+        public static int winScore;
 
         //Image array for each Player
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
@@ -225,6 +226,7 @@ namespace Totem_Smash
                                 if (p.points == 3)
                                 {
                                     //TODO add label to determine winner
+                                    winScore = p.points;
                                     EndGame();
                                 }
                                 else { CountDown(); }
@@ -285,7 +287,6 @@ namespace Totem_Smash
         /// </summary>
         private void EndGame()
         {
-            //TODO the winner will be saved to an xml file
             //TODO the program will close and go back to the main Program
             Form f = this.FindForm();
             f.Controls.Remove(this);
