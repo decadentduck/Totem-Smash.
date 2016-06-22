@@ -24,14 +24,11 @@ namespace Totem_Smash
         List<Player> players = new List<Player>();
         List<Totem> totems = new List<Totem>();
 
-        public static int winScore;
+        public static int winScore= 1000000;
 
         //Image array for each Player
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
-
-        //counter
-        int c;
 
         #endregion
 
@@ -154,20 +151,13 @@ namespace Totem_Smash
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            #region timer
-            c++;
-            if (c == 60)
-            {
-                c = 0;
-                foreach (Player p in players) { p.time++; }
-            }
-            #endregion
 
             //counter for totems
             int i = -1;
             foreach (Player p in players)
             {
                 i++;
+                p.time++;
 
                 #region Player Movement
 
@@ -202,7 +192,7 @@ namespace Totem_Smash
                 #region Collision Check
                 if (p.checkCol)
                 {
-                    //Check for collision between player and totem(call Player.collision method)
+                    //Check for collision between player and totem
                     foreach (Player P in players)
                     {
                         if (P.Collision(P, totems[i]) == true)
@@ -217,7 +207,6 @@ namespace Totem_Smash
                             p.lowest = 0;
 
                             P.y = totems[i].y - P.size;
-                            P.highest = 0;
 
                             //Check if there’s totem left
                             if (totems[i].size - totems[i].damage < 1)
@@ -226,7 +215,7 @@ namespace Totem_Smash
                                 if (p.points == 3)
                                 {
                                     //TODO add label to determine winner
-                                    winScore = p.points;
+                                    winScore = p.time;
                                     EndGame();
                                 }
                                 else { CountDown(); }
