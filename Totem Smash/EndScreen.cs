@@ -13,9 +13,14 @@ namespace Totem_Smash
 {
     public partial class EndScreen : UserControl
     {
+        #region lists and variables
         List<Score> scores = new List<Score>();
         string name;
         string points;
+        int letter = 0;
+        int l1 = 65;
+        int l2 = 65;
+        #endregion
 
         public EndScreen()
         {
@@ -57,24 +62,20 @@ namespace Totem_Smash
             #region new highscore? 
             //TODO determine if player's score is a highscore
             int num = scores.Count();
-            if (GameScreen.winScore < Convert.ToInt32( scores[num - 1].points))
+            if (GameScreen.winScore < Convert.ToInt32(scores[num - 1].points))
             {
-
                 //TODO if so ask for name input & add it to list
-                //TODO sort list by points
-                //TODO remove at space 10
+                letter1.Visible = true;
+                letter2.Visible = true;
+                scoreOutput.Visible = true;
+                highscoresOutput.Visible = false;
+
+                scoreOutput.Text = Convert.ToString(GameScreen.winScore);
+                letter = 1;
+
             }
             #endregion
 
-            #region Highscore output
-            //TODO print list to label
-            for (int p = 0; p < 9; p++)
-            {
-                highscoresOutput.Text += Convert.ToString(p + 1) + ": " + scores[p].name + "    "
-                    + scores[p].points + "\n";
-            }
-            #endregion
-            
         }
 
         private void EndScreen_KeyDown(object sender, KeyEventArgs e)
@@ -84,9 +85,76 @@ namespace Totem_Smash
                 case Keys.Escape:
                     Escape();
                     break;
+                case Keys.N:
+                    if (letter == 1)
+                    {
+                        if (l1 == 90) { l1 = 65; }
+                        else { l1++; }
+                    }
+                    else if (letter == 2)
+                    {
+                        if (l2 == 90) { l2 = 65; }
+                        else { l2++; }
+                    }
+                    break;
+                case Keys.Space:
+                    if (letter == 1)
+                    {
+                        if (l1 == 65) { l1 = 90; }
+                        else { l1--; }
+                    }
+                    if (letter == 2)
+                    {
+                        if (l2 == 65) { l2 = 90; }
+                        else { l2--; }
+                    }
+                    break;
+                case Keys.M:
+                    if (letter == 1) { letter = 2; }
+                    else
+                    {
+                        #region enter highscore
+                        letter1.Visible = false;
+                        letter2.Visible = false;
+                        scoreOutput.Visible = false;
+                        highscoresOutput.Visible = true;
+
+                        Score s = new Score(letter1.Text + letter2.Text, Convert.ToString(GameScreen.winScore));
+
+                        int a = 10;
+                        for (int i = 9; i > -1; i--)
+                        {
+                            if (Convert.ToInt32(s.points) <= Convert.ToInt32(scores[i].points))
+                            {
+                                a = i;
+                            }
+                        }
+
+                        scores.Insert(a, s);
+                        scores.RemoveAt(10);
+                        #endregion
+
+                        #region Highscore output
+                        //print list to label
+                        for (int p = 0; p < 9; p++)
+                        {
+                            highscoresOutput.Text += Convert.ToString(p + 1) + ": " + scores[p].name + "    "
+                                + scores[p].points + "\n";
+                        }
+                        #endregion
+                    }
+                    break;
             }
+
+            Char c1 = (Char)l1;
+            letter1.Text = Convert.ToString(c1);
+            Char c2 = (Char)l2;
+            letter2.Text = Convert.ToString(c2);
         }
 
+        /// <summary>
+        /// writes highscores to xml file and returns to menu
+        /// </summary>
         private void Escape()
         {
 

@@ -43,7 +43,7 @@ namespace Totem_Smash
                     Application.Exit();
                     break;
                 case Keys.Space:
-                    //TODO add option to go to highscores
+                    //option to go to highscores
                     Form f = this.FindForm();
                     f.Controls.Remove(this);
                     EndScreen es = new EndScreen();

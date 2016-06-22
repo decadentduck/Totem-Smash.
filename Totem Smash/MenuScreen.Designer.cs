@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.ready2 = new System.Windows.Forms.PictureBox();
             this.ready1 = new System.Windows.Forms.PictureBox();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ready2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ready1)).BeginInit();
             this.SuspendLayout();
@@ -87,11 +88,21 @@
             this.ready1.TabStop = false;
             this.ready1.Visible = false;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(113, 387);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(35, 13);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "label2";
+            // 
             // MenuScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.ready1);
             this.Controls.Add(this.ready2);
             this.Controls.Add(this.label1);
@@ -115,5 +126,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox ready2;
         private System.Windows.Forms.PictureBox ready1;
+        private System.Windows.Forms.Label label2;
     }
 }

@@ -18,6 +18,10 @@ namespace Totem_Smash
             damage = _damage;
         }
 
+        /// <summary>
+        /// changes variables according to how much damage was done
+        /// </summary>
+        /// <param name="_damage"></param>
         public void DamageDone(int _damage)
         {
             //make totem size change dependant on damage
