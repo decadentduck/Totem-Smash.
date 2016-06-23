@@ -75,7 +75,7 @@ namespace Totem_Smash
 
             }
             #endregion
-
+            else { DrawScores(); }
         }
 
         private void EndScreen_KeyDown(object sender, KeyEventArgs e)
@@ -134,14 +134,7 @@ namespace Totem_Smash
                         scores.RemoveAt(10);
                         #endregion
 
-                        #region Highscore output
-                        //print list to label
-                        for (int p = 0; p < 9; p++)
-                        {
-                            highscoresOutput.Text += Convert.ToString(p + 1) + ": " + scores[p].name + "    "
-                                + scores[p].points + "\n";
-                        }
-                        #endregion
+                        DrawScores();
                     }
                     break;
             }
@@ -182,6 +175,19 @@ namespace Totem_Smash
             f.Controls.Remove(this);
             MenuScreen ms = new MenuScreen();
             f.Controls.Add(ms);
+        }
+
+        private void DrawScores()
+        {
+            #region Highscore output
+            highscoresOutput.Visible = true;
+            //print list to label
+            for (int p = 0; p < 9; p++)
+            {
+                highscoresOutput.Text += Convert.ToString(p + 1) + ": " + scores[p].name + "    "
+                    + scores[p].points + "\n";
+            }
+            #endregion
         }
     }
 }
