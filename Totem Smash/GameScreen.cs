@@ -47,8 +47,8 @@ namespace Totem_Smash
             totems.Add(t);
             totems.Add(tt);
 
-            P1 = new Player(t.x + 10, t.y - 82, 82, 8, player1);
-            P2 = new Player(tt.x + 10, tt.y - 82, 82, 8, player2);
+            P1 = new Player(t.x + 10, t.y - 82, 80, 8, player1);
+            P2 = new Player(tt.x + 10, tt.y - 82, 80, 8, player2);
             players.Add(P1);
             players.Add(P2);
         }
@@ -151,7 +151,6 @@ namespace Totem_Smash
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-
             //counter for totems
             int i = -1;
             foreach (Player p in players)
@@ -185,7 +184,7 @@ namespace Totem_Smash
 
                 //find highest point player jumped to determine damage later
                 if (p.y < p.highest) { p.highest = p.y; }
-                if (p.y > p.lowest) { p.lowest = p.y; }
+                else if (p.y > p.lowest) { p.lowest = p.y; }
 
                 #endregion
 
@@ -203,10 +202,10 @@ namespace Totem_Smash
                             //Determine damage done to totem and send it to totem.damageDone Method
                             int damage = Convert.ToInt16((P.lowest - P.highest - p.size) /2);
                             totems[i].DamageDone(damage);
-                            p.highest = 800;
-                            p.lowest = 0;
 
                             P.y = totems[i].y - P.size;
+                            p.lowest = p.y;
+                            p.highest = p.y;
 
                             //Check if there’s totem left
                             if (totems[i].size - totems[i].damage < 1)
@@ -214,8 +213,10 @@ namespace Totem_Smash
                                 p.points++;
                                 if (p.points == 3)
                                 {
-                                    //TODO add label to determine winner
+                                    //label to determine winner
+                                    winnerLabel.Visible = true;
                                     winScore = p.time;
+                                    Thread.Sleep(1000);
                                     EndGame();
                                 }
                                 else { CountDown(); }
@@ -268,7 +269,6 @@ namespace Totem_Smash
             f.Controls.Remove(f);
             MenuScreen ms = new MenuScreen();
             f.Controls.Add(ms);
-            //TODO problems?
         }
 
         /// <summary>
@@ -276,7 +276,7 @@ namespace Totem_Smash
         /// </summary>
         private void EndGame()
         {
-            //TODO the program will close and go back to the main Program
+            //the program will close and go back to the main Program
             Form f = this.FindForm();
             f.Controls.Remove(this);
             EndScreen es = new EndScreen();

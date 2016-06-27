@@ -32,6 +32,7 @@
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.point1Label = new System.Windows.Forms.Label();
             this.point2Label = new System.Windows.Forms.Label();
+            this.winnerLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // gameTimer
@@ -59,11 +60,23 @@
             this.point2Label.TabIndex = 2;
             this.point2Label.Text = "Player 2 Points: ";
             // 
+            // winnerLabel
+            // 
+            this.winnerLabel.AutoSize = true;
+            this.winnerLabel.Font = new System.Drawing.Font("Segoe UI", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.winnerLabel.Location = new System.Drawing.Point(233, 167);
+            this.winnerLabel.Name = "winnerLabel";
+            this.winnerLabel.Size = new System.Drawing.Size(316, 65);
+            this.winnerLabel.TabIndex = 3;
+            this.winnerLabel.Text = "Player 2 wins!";
+            this.winnerLabel.Visible = false;
+            // 
             // GameScreen
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkGreen;
+            this.Controls.Add(this.winnerLabel);
             this.Controls.Add(this.point2Label);
             this.Controls.Add(this.point1Label);
             this.DoubleBuffered = true;
@@ -83,5 +96,6 @@
         private System.Windows.Forms.Timer gameTimer;
         private System.Windows.Forms.Label point1Label;
         private System.Windows.Forms.Label point2Label;
+        private System.Windows.Forms.Label winnerLabel;
     }
 }

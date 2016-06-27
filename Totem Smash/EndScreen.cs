@@ -60,11 +60,11 @@ namespace Totem_Smash
             #endregion
 
             #region new highscore? 
-            //TODO determine if player's score is a highscore
+            //determine if player's score is a highscore
             int num = scores.Count();
             if (GameScreen.winScore < Convert.ToInt32(scores[num - 1].points))
             {
-                //TODO if so ask for name input & add it to list
+                //if so ask for name input & add it to list
                 letter1.Visible = true;
                 letter2.Visible = true;
                 scoreOutput.Visible = true;

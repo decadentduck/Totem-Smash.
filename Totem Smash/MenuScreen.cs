@@ -13,7 +13,6 @@ namespace Totem_Smash
     public partial class MenuScreen : UserControl
     {
         bool p1Ready, p2Ready;
-        //TODO add high scores option label
 
         public MenuScreen()
         {
