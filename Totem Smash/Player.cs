@@ -60,6 +60,7 @@ namespace Totem_Smash
                 if (y < 0)
                 {
                     fall = true;
+                    GameScreen.fallSound.Play();
                 }
             }
         }

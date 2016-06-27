@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.Media;
 
 namespace Totem_Smash
 {
@@ -30,6 +31,9 @@ namespace Totem_Smash
         Image[] player1 = { Properties.Resources.p1down, Properties.Resources.p1up, Properties.Resources.p1Fallingl };
         Image[] player2 = { Properties.Resources.p2Down, Properties.Resources.p2Up, Properties.Resources.p2Falling };
 
+        SoundPlayer jump1Sound = new SoundPlayer(Properties.Resources.Jump1);
+        SoundPlayer jump2Sound = new SoundPlayer(Properties.Resources.Jump2);
+        public static SoundPlayer fallSound = new SoundPlayer(Properties.Resources.fall);        SoundPlayer smashSound = new SoundPlayer(Properties.Resources.smash);
         #endregion
 
         /// <summary>
@@ -176,6 +180,8 @@ namespace Totem_Smash
                 {
                     p.jump = true;
                     p.canJump = false;
+                    if (i == 0) { jump1Sound.Play(); }
+                    if( i == 1) { jump2Sound.Play(); }
                 }
                 if (p.jump == true)
                 {
@@ -196,6 +202,7 @@ namespace Totem_Smash
                     {
                         if (P.Collision(P, totems[i]) == true)
                         {
+                            smashSound.Play();
                             P.smash = false;
                             P.canJump = true;
 

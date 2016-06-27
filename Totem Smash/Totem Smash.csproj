@@ -128,6 +128,18 @@
   <ItemGroup>
     <None Include="p2Up.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Jab-SoundBible.com-1806727891.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Jump-SoundBible.com-1007297584.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Mario_Jumping-Mike_Koenig-989896458.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\spin_jump-Brandino480-2020916281.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
